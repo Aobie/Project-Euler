@@ -27,15 +27,25 @@ def getPrimes(n): #return a list of all prime numbers up to but NOT including n
 	else:
 		return primeslist
 
-def listPrimeComponents(n): #return a list of all prime factors of n
-	allprimes = getPrimes(n)
-	primefactors = []
-	for x in allprimes:
+def getFactors(n):
+	factorslist = []
+	for x in range (2, math.ceil(math.sqrt(n))):
 		if n % x == 0:
+			factorslist.append(x)
+			factorslist.append(int(n/x))
+	else:
+		return factorslist
+		
+def listPrimeComponents(n): #return a list of all prime factors of n
+	allfactors = getFactors(n)
+	primefactors = []
+	for x in allfactors:
+		if isPrime(x)
 			primefactors.append(x)
 	else:
 		return primefactors
 		
 def getLargestPrimeFactor(n):
 	primes = listPrimeComponents(n)
+	primes.sort()
 	return primes[-1]
