@@ -1,3 +1,15 @@
+import time
+import math
+
+def printTiming(func):
+   def wrapper(*arg):
+       t1 = time.time()
+       res = func(*arg)
+       t2 = time.time()
+       print ('%s took %0.3f ms' % (func.__name__, (t2-t1)*1000.0))
+       return res
+   return wrapper
+
 def isEven(n):
 	if n % 2 == 0:
 		return True
@@ -27,7 +39,7 @@ def getPrimes(n): #return a list of all prime numbers up to but NOT including n
 	else:
 		return primeslist
 
-def getFactors(n):
+def get_all_factors(n):
 	factorslist = []
 	for x in range (2, math.ceil(math.sqrt(n))):
 		if n % x == 0:
@@ -37,15 +49,46 @@ def getFactors(n):
 		return factorslist
 		
 def listPrimeComponents(n): #return a list of all prime factors of n
-	allfactors = getFactors(n)
+	t1 = time.time()
+	x = 2
 	primefactors = []
-	for x in allfactors:
-		if isPrime(x)
+	while x * x <= n:
+		if n % x:
+			x += 1
+		else:
+			n //= x
 			primefactors.append(x)
-	else:
-		return primefactors
+	if n > 1:
+		primefactors.append(n)
+	t2 = time.time()
+	tfinal = (t2-t1)*1000.0
+	print (tfinal, " ms to calculate.")	
+	return primefactors
 		
 def getLargestPrimeFactor(n):
-	primes = listPrimeComponents(n)
-	primes.sort()
-	return primes[-1]
+	if isPrime(n):
+		return n
+	else:
+		primes = listPrimeComponents(n)
+		primes.sort()
+		return primes[-1]
+	
+def getLargestPrimeFactorFast(n):
+	x = 2
+	while x * x <= n:
+		if n % x:
+			x += 1
+		else:
+			n //= x
+	return n
+	
+def main(n):
+	import time
+	t1 = time.time()
+	answer = getLargestPrimeFactorFast(n)
+	t2 = time.time()
+	tfinal = (t2-t1)*1000.0
+	print ('Updated')
+	print ('Largest prime factor of ', n, ' is: ', answer)
+	print (tfinal, " ms to calculate.")
+	
